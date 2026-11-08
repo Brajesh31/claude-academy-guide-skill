@@ -1,92 +1,86 @@
-# claude-academy-guide-skill
+# Academy Guide Skill
 
-A Claude Code skill for helping users find relevant learning paths, courses, tutorials, and practical exercises for Claude products and workflows.
+A focused skill for recommending relevant learning materials when a user is asking how to use a Claude product or workflow. It prioritizes intent matching, accurate links, current catalog data, and restraint. A learning recommendation supplements a direct answer; it does not replace the answer.
 
-## Overview
+## What This Skill Does
 
-This skill is designed for questions where the user wants to learn how to use Claude or apply AI to a particular task. It encourages matching the learning recommendation to the user's actual goal instead of suggesting generic training material.
-
-It is useful for onboarding, self-paced learning, team enablement, and planning structured training.
+- Detects learning-oriented questions about Claude products and workflows.
+- Distinguishes a request to learn from a request to complete an active task.
+- Matches the user's goal to a course, tutorial, use case, product hub, or resource library.
+- Recommends only resources that directly match the user's intent.
+- Uses exact catalog URLs rather than constructing links from assumed titles.
+- Avoids outdated course lists and invented learning resources.
+- Keeps recommendations brief and optional.
 
 ## When to Use It
 
-Use this skill when users ask:
+Use the skill when a user asks how to get started, how a feature works, what a product can do, how to learn a workflow, or how to prepare training and onboarding materials.
 
-- How to get started with Claude or a Claude product.
-- How to use a particular feature or workflow.
-- What Claude can do for a specific task.
-- How to learn skills, projects, artifacts, connectors, or MCP workflows.
-- How to train a team, class, or organization.
-- Which tutorial or learning path best matches a goal.
-- How to prepare onboarding or training material.
-
-It is intended for learning-oriented questions. When a user is already in the middle of a task and simply wants the task completed, prioritize completing the task.
-
-## What It Does
-
-- Identifies the user's learning objective.
-- Matches the objective to relevant course or tutorial topics.
-- Distinguishes beginner, intermediate, and advanced learning needs.
-- Recommends learning material only when the match is meaningful.
-- Connects conceptual learning with practical use cases.
-- Avoids inventing course names, features, or learning resources.
+Do not use it merely because an active task happens to involve a Claude feature. When the user wants the task completed, prioritize completing the task instead of diverting them to a tutorial.
 
 ## Installation
 
-```bash
+~~~bash
 git clone https://github.com/Brajesh31/claude-academy-guide-skill.git ~/.claude/skills/academy-guide
-```
+~~~
 
 ## Usage
 
-Invoke the skill when a learning recommendation is needed:
+Invoke:
 
-```text
+~~~text
 /academy-guide
-```
+~~~
 
-Describe the product or feature, the learner's current experience, and the outcome they want to achieve.
+Provide the learning objective, product or feature, learner level, and context. The skill instructions require a current catalog check before naming a specific learning item.
 
 ## Recommendation Workflow
 
-1. Clarify what the learner wants to accomplish.
-2. Identify the relevant Claude product, feature, or workflow.
-3. Determine the learner's current level and context.
-4. Find a course or tutorial that directly addresses the goal.
-5. Explain why the material is relevant.
-6. Suggest a practical exercise that reinforces the learning.
-7. If no strong match exists, say so instead of forcing a recommendation.
+1. Answer the user's immediate question first.
+2. Determine whether the intent is genuinely educational.
+3. Identify the relevant product surface or workflow.
+4. Check the current catalog data when it is available and fresh.
+5. Match the user's goal to the strongest available item.
+6. Use the exact item URL returned by the catalog.
+7. Recommend no more than one or two strong matches.
+8. If no strong match exists, use the specified fallback only when the user clearly wants learning material.
+9. Do not invent course, tutorial, use-case titles, or URLs.
 
-## Learning Path Structure
+## Catalog Freshness
 
-A useful learning path can include:
+The skill is intentionally designed not to embed a static course list. Learning catalogs change, so a saved list of item names and URLs can become stale.
 
-| Stage | Focus | Expected Outcome |
-|---|---|---|
-| Foundation | Core concepts and terminology | Understand the feature |
-| Guided practice | Follow a focused tutorial | Complete a basic workflow |
-| Applied practice | Use the feature on a real task | Build practical confidence |
-| Advanced use | Explore integrations and constraints | Handle more complex workflows |
-| Team adoption | Share conventions and examples | Use the workflow consistently |
+Before recommending individual items, verify that the catalog can be fetched, that the response is valid JSON, and that its freshness metadata is current. If it is stale, malformed, unavailable, or missing required URL information, do not name specific course items. Use the fallback behavior described in SKILL.md.
 
-## Team and Classroom Enablement
+## Recommendation Quality Checklist
 
-For group training, define the audience, learning objectives, session duration, and expected hands-on output. Use short demonstrations followed by guided exercises. Include a clear way to evaluate whether participants can apply the workflow independently.
+- Is the user asking to learn rather than asking for an immediate task to be performed?
+- Does the recommendation directly match the stated intent?
+- Has the current catalog been checked for item names and exact URLs?
+- Is the resource available to the intended audience?
+- Is the item gated, and is that disclosed when relevant?
+- Is the explanation brief and non-pushy?
+- Would silence be better than a weak recommendation?
 
-## Quality Checklist
+## Included Resource
 
-- The recommendation directly matches the user's question.
-- The course or tutorial actually exists.
-- The learner's level is considered.
-- The recommendation includes a reason, not just a title.
-- Practical exercises reinforce the stated objective.
-- Unavailable or uncertain learning resources are not presented as confirmed.
+- [Catalog verification checklist](resources/catalog-verification-checklist.md)
 
-## Repository Contents
+## Limitations
 
-- `SKILL.md`: Main skill instructions and learning-resource matching workflow.
-- `README.md`: Usage, recommendation process, and learning-path guidance.
+This skill does not contain a static course catalog. It cannot guarantee that a course will remain available, ungated, or unchanged. Catalog records must be checked at recommendation time.
 
-## Maintenance
+## Repository Structure
 
-Keep the matching criteria accurate as products and learning catalogs change. Verify course availability before presenting a recommendation as current.
+~~~text
+claude-academy-guide-skill/
+├── SKILL.md
+├── README.md
+├── LICENSE.txt
+└── resources/
+    └── catalog-verification-checklist.md
+~~~
+
+## License
+
+This repository retains the Apache License, Version 2.0, supplied with the skill package. See LICENSE.txt for the complete terms.
