@@ -76,11 +76,11 @@ This skill does not contain a static course catalog. It cannot guarantee that a 
 claude-academy-guide-skill/
 ├── SKILL.md
 ├── README.md
-├── LICENSE.txt
+├── LICENSE
 └── resources/
     └── catalog-verification-checklist.md
 ~~~
 
 ## License
 
-This repository retains the Apache License, Version 2.0, supplied with the skill package. See LICENSE.txt for the complete terms.
+Released under the MIT License. Copyright (c) 2026 Brajesh Kumar. See the root `LICENSE` file for the complete terms.
